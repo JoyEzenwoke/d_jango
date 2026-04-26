@@ -14,8 +14,7 @@ schema_view = get_schema_view(
         description="API documentation for your ecommerce project",
     ),
     public=True,
-    permission_classes=[permissions.AllowAny],
-    authentication_classes=[],
+    permission_classes=(permissions.AllowAny,),  # IMPORTANT: tuple, not list
 )
 
 urlpatterns = [
@@ -26,7 +25,15 @@ urlpatterns = [
     path('api/', include('products.urls')),
 
     # Swagger UI
-    re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui'),
+
+    re_path(
+        r'^swagger/$',
+        schema_view.with_ui(
+            'swagger',
+            cache_timeout=0,
+        ),
+        name='swagger-ui'
+    ),
 
     # Redoc (optional alternative docs)
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='redoc'),
